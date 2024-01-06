@@ -1,0 +1,107 @@
+rundir: ../data/experiments
+run_name: subject1
+
+# Dataset configs
+dataset_class: dataset.real.RealVideoDataset
+data_dir: ../data/datasets/yufeng
+train_subdirs:
+- MVI_1810
+- MVI_1811
+- MVI_1814
+val_subdirs:
+- MVI_1812
+val_subsample: list([0, 200, 500, 800, 1000])
+test_subdirs:
+- MVI_1812
+test_subsample: 10
+img_res: [256, 256]
+
+# Model configs
+model_class: model.dmmavatar.DMMavatar
+model_args:
+  dim_expression: 50
+  dim_frame_latent: 0
+  dim_radiance_feature: 3
+  dim_pos_feature: 8
+  num_texture_basis: 16
+  ghostbone: true
+
+  manifold_network_class: model.manifold_network.ManifoldNetwork
+  manifold_network_args:
+    pe_freqs: 5
+    num_layers: 6
+    dim_hidden: 256
+    init_radius: 0.5
+
+  deformer_network_args:
+    pe_freqs: 0
+    num_layers: 3
+    dim_hidden: 128
+
+  radiance_network_class: model.radiance_network.RadianceNetwork
+  radiance_network_args:
+    pe_freqs: 12
+    num_layers: 6
+    num_base_layers: 4
+    dim_hidden: 512
+    skip_input_layers: [4]
+    texture_basis_args:
+      dim_global_hidden: 64
+      num_global_layers: 3
+      dim_spatial_hidden: 16
+      num_spatial_layers: 2
+      temperature: 10.0
+
+  radiance_decoder_class: ""
+  radiance_decoder_args:
+    dir_embedding_freqs: 0
+    num_layers: 2
+    dim_hidden: 16
+
+  manifold_renderer_args:
+    num_manifold_levels: 8
+    manifold_level_start: -0.2
+    manifold_level_end: 0.0
+    manifold_samples: 48
+    manifold_secant_steps: 6
+    bounding_sphere_radius: 1.1
+    use_gt_mask_when_training: false
+    use_presort: false
+
+# Data loader configs
+batch_size: 6
+num_rays: 2048
+num_workers: 4
+no_shuffle: false
+
+# Loss configs
+loss_class: model.loss.Loss
+loss_args:
+  rgb_loss_weight: 1.0
+  mask_loss_weight: 10.0
+  mask_alpha: 50.0
+  mask_target_gamma: 10.0
+  flame_loss_weight: 1.0
+  flame_distance_loss_weight: 1.0
+  flame_dist_threshold: 0.002
+  flame_target_gamma: 0.0
+  flame_loss_decay_iterations: 20000
+  use_semantic: true
+
+# Optimizer configs
+optimize_latent: false
+optimize_expression: true
+optimize_pose: true
+optimize_camera: true
+
+# Scheduler configs
+scheduler_class: torch.optim.lr_scheduler.MultiStepLR
+scheduler_args:
+  milestones: [10000, 20000, 25000]
+  gamma: 0.5
+
+# Training hyperparameters
+iterations: 30000
+lr: 3.0e-4
+lr_input: 5.0e-5
+clip_grad_norm: 1.0

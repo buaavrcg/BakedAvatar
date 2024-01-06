@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BakedAvatar Demo</title>
+        <link rel="stylesheet" href="./jsUtils/materialize.min.css" />
+        <style>
+            .thumb {
+                display: none;
+            }
+            .onerow {
+                display: inline-block;
+                width: 120px;
+            }
+
+            .metas {
+                margin-left: 30%;
+            }
+
+            .p1 {
+                /* border-left: 3px brown solid; */
+                margin-left: 20px;
+            }
+
+            .ani {
+                margin: 5px;
+                width: 150px;
+                height: 35px;
+                border-radius: 10px;
+                background-color: skyblue;
+            }
+
+            .abv {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 0px;
+                height: 35px;
+                border-radius: 10px;
+                z-index: 100;
+            }
+
+            .aniname {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 150px;
+                height: 35px;
+                z-index: 120;
+                text-transform: none;
+                font-size: 15px;
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <canvas
+                id="canvas"
+                width="600px"
+                height="600px"
+                style="display: inline-block; border: 1px red solid; background-color: black"
+                @contextmenu.prevent
+            ></canvas>
+            <div style="position: absolute; margin-top: 30px; display: none" id="uiContainer">
+                <div>
+                    <div class="p1">
+                        <div class="onerow" id="exp1"></div>
+                        <div class="onerow" id="exp2"></div>
+                        <div class="onerow" id="exp3"></div>
+                        <div class="onerow" id="exp4"></div>
+                        <div class="onerow" id="exp5"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp6"></div>
+                        <div class="onerow" id="exp7"></div>
+                        <div class="onerow" id="exp8"></div>
+                        <div class="onerow" id="exp9"></div>
+                        <div class="onerow" id="exp10"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp11"></div>
+                        <div class="onerow" id="exp12"></div>
+                        <div class="onerow" id="exp13"></div>
+                        <div class="onerow" id="exp14"></div>
+                        <div class="onerow" id="exp15"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp16"></div>
+                        <div class="onerow" id="exp17"></div>
+                        <div class="onerow" id="exp18"></div>
+                        <div class="onerow" id="exp19"></div>
+                        <div class="onerow" id="exp20"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp21"></div>
+                        <div class="onerow" id="exp22"></div>
+                        <div class="onerow" id="exp23"></div>
+                        <div class="onerow" id="exp24"></div>
+                        <div class="onerow" id="exp25"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp26"></div>
+                        <div class="onerow" id="exp27"></div>
+                        <div class="onerow" id="exp28"></div>
+                        <div class="onerow" id="exp29"></div>
+                        <div class="onerow" id="exp30"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp31"></div>
+                        <div class="onerow" id="exp32"></div>
+                        <div class="onerow" id="exp33"></div>
+                        <div class="onerow" id="exp34"></div>
+                        <div class="onerow" id="exp35"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp36"></div>
+                        <div class="onerow" id="exp37"></div>
+                        <div class="onerow" id="exp38"></div>
+                        <div class="onerow" id="exp39"></div>
+                        <div class="onerow" id="exp40"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp41"></div>
+                        <div class="onerow" id="exp42"></div>
+                        <div class="onerow" id="exp43"></div>
+                        <div class="onerow" id="exp44"></div>
+                        <div class="onerow" id="exp45"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="exp46"></div>
+                        <div class="onerow" id="exp47"></div>
+                        <div class="onerow" id="exp48"></div>
+                        <div class="onerow" id="exp49"></div>
+                        <div class="onerow" id="exp50"></div>
+                    </div>
+                    <div class="p1" style="margin-top: 10px">
+                        <div class="onerow" id="pose1"></div>
+                        <div class="onerow" id="pose2"></div>
+                        <div class="onerow" id="pose3"></div>
+                        <div class="onerow" id="pose4"></div>
+                        <div class="onerow" id="pose5"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="pose6"></div>
+                        <div class="onerow" id="pose7"></div>
+                        <div class="onerow" id="pose8"></div>
+                        <div class="onerow" id="pose9"></div>
+                        <div class="onerow" id="pose10"></div>
+                    </div>
+                    <div class="p1">
+                        <div class="onerow" id="pose11"></div>
+                        <div class="onerow" id="pose12"></div>
+                        <div class="onerow" id="pose13"></div>
+                        <div class="onerow" id="pose14"></div>
+                        <div class="onerow" id="pose15"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s1" style="width: 160px">
+                <p id="timeText" style="display: inline-block; font-size: 1.8em"></p>
+                <p id="resText" style="display: inline-block; font-size: 1.2em; margin: 0px"></p>
+                <p id="meshText" style="display: inline-block; margin: 0px"></p>
+            </div>
+            <div id="control_block" style="display: none">
+                <div class="col row" style="width: 200px">
+                    <div class="col" style="margin-top: 10px">
+                        <input class="filled-in" type="checkbox" id="precise_occlusion" />
+                        <label for="precise_occlusion" class="black-text">precise occlusion</label>
+                    </div>
+                    <div class="col" style="margin-top: 10px">
+                        <input class="filled-in" type="checkbox" id="show_mesh" />
+                        <label for="show_mesh" class="black-text">show meshes</label>
+                    </div>
+                    <div class="col" style="margin-top: 10px">
+                        <input class="filled-in" type="checkbox" id="show_normal" />
+                        <label for="show_normal" class="black-text">show normal</label>
+                    </div>
+                    <div class="col" style="margin-top: 10px">
+                        <input class="filled-in" type="checkbox" id="show_viewdir" />
+                        <label for="show_viewdir" class="black-text">show viewdir</label>
+                    </div>
+                    <div class="col" style="margin-top: 10px">
+                        <input class="filled-in" type="checkbox" id="show_coef" />
+                        <label for="show_coef" class="black-text">show coef</label>
+                    </div>
+                </div>
+                <div class="col row" style="width: 180px">
+                    <div class="col" id="M_num"></div>
+                    <div class="col" id="F_num"></div>
+                    <div class="col" id="smoothing"></div>
+                </div>
+                <div class="col row" id="btn_field" style="width: 510px">
+                    <div
+                        class="col waves-effect waves-light btn white-text ani lime darken-1"
+                        id="sandbox"
+                    >
+                        Sandbox
+                    </div>
+                    <div
+                        class="col waves-effect waves-light btn white-text ani orange darken-4"
+                        id="resetBtn"
+                    >
+                        Reset
+                    </div>
+                    <div
+                        class="col waves-effect waves-light btn white-text ani purple lighten-1"
+                        id="biasBtn"
+                    >
+                        Param Bias
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="jsUtils/jquery-3.6.4.min.js"></script>
+        <script type="text/javascript" src="jsUtils/materialize.min.js"></script>
+        <script type="text/javascript" src="jsUtils/webgl-lessons-ui.js"></script>
+        <script type="text/javascript" src="jsUtils/webgl-utils.js"></script>
+        <script type="text/javascript" src="dist/main.js"></script>
+    </body>
+</html>

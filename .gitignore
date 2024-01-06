@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+.vscode/
+data
+nvdiffrast
+code/flame/**/*.pkl
+
+node_modules/
+mesh_data**/
+sequence_data**/
+dist/
