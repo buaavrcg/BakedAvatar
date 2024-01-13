@@ -119,7 +119,8 @@ accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 51
 python scripts/unpack_pkl.py ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl
 
 # export the FLAME parameter sequence for reenactment
-python scripts/export_flame_params.py <path to 1st flame_params.json> <path to 2nd flame_params.json> ... --output ./sequence_data
+# The flame_params.json are from the files in the train and test subfolders
+python scripts/export_flame_sequence.py <path to 1st flame_params.json> <path to 2nd flame_params.json> ... --output ./sequence_data
 ```
 
 Put the exported `mesh_data` directory and `sequence_data` directory into the root of the web demo and start the server.

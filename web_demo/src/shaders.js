@@ -81,7 +81,7 @@ export function getVertexShaderSource(J) {
 export function getFragmentShaderSource(n_basis, dim_middle) {
     return `#version 300 es
     precision highp float;
-    in vec2 v_uv;ss
+    in vec2 v_uv;
     in vec3 v_normal;
     in vec3 v_viewpos;
     uniform sampler2D posfeatTex;
