@@ -74,8 +74,8 @@ Finally, download [FLAME model](https://flame.is.tue.mpg.de/download.php), choos
 
 ## Download Training Data
 We use the same data format as in [IMavatar](https://github.com/zhengyuf/IMavatar) and [PointAvatar](https://github.com/zhengyuf/PointAvatar).
-You can download a preprocessed dataset from [subject 1](https://dataset.ait.ethz.ch/downloads/IMavatar_data/data/yufeng.zip), [subject 2](https://dataset.ait.ethz.ch/downloads/IMavatar_data/data/soubhik.zip).
-To generate your own dataset, please follow intructions in the [IMavatar repo](https://github.com/zhengyuf/IMavatar/tree/main/preprocess).
+You can download a preprocessed dataset from [subject 1, subject 2](https://drive.google.com/drive/folders/1w5_RiCBQ-bZmFzcWdml7ReWZTO2I7V2y), then unzip the files into `data/datasets` folder. You should be able to see the paths of one subject's videos structured like `data/datasets/<subject_name>/<video_name>`.
+To generate your own dataset, please follow the instructions in the [IMavatar repo](https://github.com/zhengyuf/IMavatar/tree/main/preprocess).
 
 ## Train implicit fields (Stage-1)
 ```bash
