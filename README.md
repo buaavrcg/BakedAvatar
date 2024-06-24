@@ -111,20 +111,34 @@ accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 51
 
 # evaluate implicit fields (result of stage-1)
 accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512
+
+# run cross-identity reenactment in PyTorch code
+# you may replace the reenact_data_dir with the path to the reenactment dataset and 
+# replace the reenact_subdirs with the subdirectories names
+accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512 --mesh_data_path ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl --reenact_data_dir ../data/datasets/soubhik --reenact_subdirs test
 ```
 
 ## Export assets and run the real-time web demo
 ```bash
-# export baked meshes and textures
-python scripts/unpack_pkl.py ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl
+# export baked meshes and textures for the web demo
+python scripts/unpack_pkl.py ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl --output ./mesh_data
 
 # export the FLAME parameter sequence for reenactment
-# The flame_params.json are from the files in the train and test subfolders
+# The flame_params.json are from the files in the train and test subfolders of the dataset (e.g., ../data/datasets/soubhik/train/flame_params.json)
+# You may export the sequences from the same identity for self-reenactment, or from different identities for cross-identity reenactment.
 python scripts/export_flame_sequence.py <path to 1st flame_params.json> <path to 2nd flame_params.json> ... --output ./sequence_data
 ```
 
-Put the exported `mesh_data` directory and `sequence_data` directory into the root of the web demo and start the server.
-Make sure that you have installed npm and nodejs, then run the following commands:
+Copy the exported `mesh_data` directory and `sequence_data` directory into the root of the web demo and start the server.
+The diectionary structure should be like:
+```
+web_demo
+├── jsUtils
+├── mesh_data
+├── sequence_data
+└── src
+```
+Make sure that you have installed Npm and Node.js, then run the following commands:
 ```bash
 cd web_demo
 npm install
@@ -132,7 +146,7 @@ npm run build
 npm install --global serve
 serve
 ```
-Then, open your browser and visit `http://localhost:8080/`.
+Then, open your browser and visit `http://localhost:8080/`. To run the real-time reenactment, you can select one of the buttons with the name of the sequence in the web demo.
 
 ## Citation
 If you find our code or paper useful, please cite as:
