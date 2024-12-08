@@ -111,13 +111,15 @@ accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 51
 # evaluate baked meshes (result of stage-2)
 accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512 --use_finetune_model --mesh_data_path ../data/experiments/subject1/mesh_export/iter_30000/marching_cube/res_init16_up5/mesh_data.pkl
 
-# evaluate implicit fields (result of stage-1)
+# evaluate implicit fields (result of stage-1) (the rendering speed will be much slower)
 accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512
 
-# run cross-identity reenactment in PyTorch code
-# you may replace the reenact_data_dir with the path to the reenactment dataset and 
-# replace the reenact_subdirs with the subdirectories names
-accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512 --mesh_data_path ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl --reenact_data_dir ../data/datasets/soubhik --reenact_subdirs test
+# run cross-identity reenactment using meshes in PyTorch code
+# you may replace the reenact_data_dir with the path to the reenactment dataset and replace the reenact_subdirs with the subdirectories names
+# if you would like to see reenactment results of implicit fields, remove --use_finetune_model 
+accelerate launch scripts/runner.py -c config/subject1.yaml -t test --img_res 512 512 \
+  --use_finetune_model --mesh_data_path ../data/experiments/subject1/finetune_mesh_data/iter_30000/mesh_data.pkl \
+  --reenact_data_dir ../data/datasets/soubhik --reenact_subdirs test
 ```
 
 ## Export assets and run the real-time web demo
